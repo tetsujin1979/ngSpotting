@@ -1,5 +1,50 @@
+<!DOCTYPE html>
 <html>
-<body>
-This is the body
-</body>
+	<head>
+	  <script data-require="angular.js@1.5.3" data-semver="1.5.3" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
+	  <style type="text/css">
+		body
+		{
+			font-family: 'Helvetica', 'Arial', sans-serif;
+			color: #444444;
+			font-size: 9pt;
+			background-color: #FAFAFA;
+		}
+	  </style>
+	</head>
+	<body>
+		<div ng-app="ngSpottingApp" ng-controller="PosterCtrl as posterCtrl">
+			<div style="display: inline-block; height: 950px; width: 665px;">
+				<div style="display: inline-block; margin-left: 13px; width: 506px;">
+					<div style="text-align: justify; font-size: 25px;">{{posterCtrl.text}}</div>
+					<div style="font-weight: bold; font-size: 41px;">{{posterCtrl.subtitle1}}</div>
+					<div style="color: #EC6917; font-weight: bold; font-size: 70px;">{{posterCtrl.subtitle2}}</div>
+				</div>
+				<div style="background-color: #EC6917; color: #FFFF; display: inline-block; writing-mode: vertical-rl; width: 140px; font-weight: bold; text-align: center; height: 775px; font-size: 103px;"> Trainspotting</div>
+			</div>
+			<div style="display: inline-block; vertical-align: top;">
+				<p>
+					<textarea ng-model="posterCtrl.text" style="width: 20em;" maxlength="806" rows="20" cols="42"></textarea>
+				</p>
+				<p>
+					<textarea ng-model="posterCtrl.subtitle1" style="width: 20em;" maxlength="19" rows="1" cols="42"></textarea>
+				</p>
+				<p>
+					<textarea ng-model="posterCtrl.subtitle2" style="width: 20em;" maxlength="12" rows="1" cols="42"></textarea>
+				</p>
+			</div>
+		</div>
+
+	  <script>
+		var app = angular.module('ngSpottingApp', []);
+		app.controller('PosterCtrl', function() {
+			var vm = this;
+			vm.text = 'Choose Life. Choose a job. Choose a career. Choose a family. Choose a fucking big television, choose washing machines, cars, compact disc players and electrical tin openers. Choose good health, low cholesterol, and dental insurance. Choose fixed interest mortage repayments. Choose a starter home. Choose your friends. Choose leisurewear and matching luggage. Choose a three-piece suite on hire purchase in a range of fucking fabrics. Choose DIY and wondering who the fuck you are on a Sunday morning. Choose sitting on that couch watching mind-numbing, spirit-crushing game shows, stuffing fucking junk food into your mouth. Choose rotting away at the end of it all, pishing your last in a miserable home, nothing more than an embarrassment to the selfish, fucked up brats you spawned to replace yourself.';
+			vm.subtitle1 = 'Choose your future.';
+			vm.subtitle2 = 'Choose life.';
+		});
+	  </script>
+
+	</body>
+
 </html>
