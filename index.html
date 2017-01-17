@@ -4,45 +4,52 @@
     <script data-require="angular.js@1.5.3" data-semver="1.5.3" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.24/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>    
-    <style type="text/css">
-    body
-    {
-      font-family: 'Helvetica', 'Arial', sans-serif;
-      color: #444444;
-      font-size: 9pt;
-      background-color: #FAFAFA;
-    }
-    </style>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.4.0.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
     <div ng-app="ngSpottingApp" ng-controller="PosterCtrl as posterCtrl">
-      <div id="poster" style="display: inline-block; height: 950px; width: 665px;">
-        <div style="display: inline-block; margin-left: 13px; width: 506px; padding-right: 5px;">
-          <div style="text-align: justify; font-size: 25px;">{{posterCtrl.text}}</div>
-          <div style="font-weight: bold; font-size: 41px;">{{posterCtrl.subtitle1}}</div>
-          <div style="color: #EC6917; font-weight: bold; font-size: 70px;">{{posterCtrl.subtitle2}}</div>
+      <div id="poster" style="display: inline-block; width: 660px; background-color: #FFFFFF;">
+        <div style="display: inline-block; margin-left: 14px; width: 506px; padding-right: 5px;">
+          <div style="text-align: justify; font-size: 23px;">{{posterCtrl.text}}</div>
+          <div style="font-weight: bold;font-size: 52px;height: 1em;">{{posterCtrl.subtitle1}}</div>
+          <div style="color: #EC6917; font-weight: bold; font-size: 88px; height: 1em;">{{posterCtrl.subtitle2}}</div>
         </div>
-        <div style="position: absolute; background-color: #EC6917; display: inline-block; width: 140px;height: 715px;">
-          <div style="color: white; transform: rotate(90deg); font-weight: bold; font-size: 112px; margin-top: 10px;">
-            Trainspotting
-          </div>
+        <div style="position: absolute;background-color: #EC6917;display: inline-block;width: 140px;height: 726px;">
+          <div style="color: white; transform: rotate(90deg); font-weight: bold; font-size: 112px;">Trainspotting</div>
         </div>
       </div>
       <div style="display: inline-block; vertical-align: top;">
         <p>
-          <textarea ng-model="posterCtrl.text" style="width: 20em;" maxlength="806" rows="20" cols="42"></textarea>
+			<label>Edit text below</label><br/>
+			<textarea ng-model="posterCtrl.text" style="width: 20em;" maxlength="806" rows="20" cols="42"></textarea>
         </p>
         <p>
-          <textarea ng-model="posterCtrl.subtitle1" style="width: 20em;" maxlength="19" rows="1" cols="42"></textarea>
+			<textarea ng-model="posterCtrl.subtitle1" style="width: 20em;" maxlength="19" rows="1" cols="42"></textarea>
         </p>
         <p>
           <textarea ng-model="posterCtrl.subtitle2" style="width: 20em;" maxlength="12" rows="1" cols="42"></textarea>
         </p>
-        <p>
-          <button ng-click="posterCtrl.createImage()">Create image</button>
-          <button ng-click="posterCtrl.createPDF()">Create PDF</button>
-          <a ng-href="{{posterCtrl.image}}" download="trainspotting.png">Download Image</a>
-        </p>
+		<table cellpadding="10">
+			<tr>
+				<td>
+					<button class="btn btn-primary" ng-click="posterCtrl.createImage()" ng-disabled="!posterCtrl.imageCreated">Create image</button>
+				</td>
+				<td>
+					<button class="btn btn-primary" ng-click="posterCtrl.createPDF()" ng-disabled="posterCtrl.imageCreated">Create PDF</button>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<a class="btn btn-primary" ng-href="{{posterCtrl.image}}" download="trainspotting.png" ng-disabled="posterCtrl.imageCreated">Download Image</a>
+				</td>
+			</tr>
+			<tr>
+				<td><button class="btn btn-primary" ng-click="posterCtrl.init()" ng-disabled="posterCtrl.imageCreated">Reset</button></td>
+				<td></td>
+			</tr>
+		</table>
       </div>
     </div>
 
@@ -53,13 +60,20 @@
       }); 
       app.controller('PosterCtrl', function(ngHtml2canvas) {
         var vm = this;
-        vm.text = 'Choose Life. Choose a job. Choose a career. Choose a family. Choose a fucking big television, choose washing machines, cars, compact disc players and electrical tin openers. Choose good health, low cholesterol, and dental insurance. Choose fixed interest mortage repayments. Choose a starter home. Choose your friends. Choose leisurewear and matching luggage. Choose a three-piece suite on hire purchase in a range of fucking fabrics. Choose DIY and wondering who the fuck you are on a Sunday morning. Choose sitting on that couch watching mind-numbing, spirit-crushing game shows, stuffing fucking junk food into your mouth. Choose rotting away at the end of it all, pishing your last in a miserable home, nothing more than an embarrassment to the selfish, fucked up brats you spawned to replace yourself.';
-        vm.subtitle1 = 'Choose your future.';
-        vm.subtitle2 = 'Choose life.';
         vm.createImage = createImage;
         vm.createPDF = createPDF;
+        vm.init = init;
         vm.image = null;
         
+        vm.init();
+
+		function init() {
+			vm.text = 'Choose Life. Choose a job. Choose a career. Choose a family. Choose a fucking big television, choose washing machines, cars, compact disc players and electrical tin openers. Choose good health, low cholesterol, and dental insurance. Choose fixed interest mortage repayments. Choose a starter home. Choose your friends. Choose leisurewear and matching luggage. Choose a three-piece suite on hire purchase in a range of fucking fabrics. Choose DIY and wondering who the fuck you are on a Sunday morning. Choose sitting on that couch watching mind-numbing, spirit-crushing game shows, stuffing fucking junk food into your mouth. Choose rotting away at the end of it all, pishing your last in a miserable home, nothing more than an embarrassment to the selfish, fucked up brats you spawned to replace yourself.';
+			vm.subtitle1 = 'Choose your future.';
+			vm.subtitle2 = 'Choose life.';
+			vm.imageCreated = true;
+		}
+		
         /**
          * from http://stackoverflow.com/questions/34049956/generate-pdf-from-html-using-pdfmake-in-angularjs
          */
@@ -76,13 +90,17 @@
         /**
          * partially from https://github.com/tristansokol/html2canvas-angular
          */
-
         function createImage() {
           ngHtml2canvas.renderBody().then(function(canvas){
             vm.image = canvas.toDataURL();
           });
+          vm.imageCreated = false;
         }
       });
+      
+        /**
+         * from https://github.com/tristansokol/html2canvas-angular
+         */
       app.factory('ngHtml2canvas', function($q) { 
         var self={
           renderBody:function(){
